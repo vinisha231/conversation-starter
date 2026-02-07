@@ -1,16 +1,80 @@
-# React + Vite
+# Conversation Starter MVP
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+I built a single-screen, mobile-first experience that helps learners practice real-world language conversations instead of memorization. The flow is intentionally lightweight: pick a language and scenario, read a prompt, respond, and get simple guidance to keep the conversation going.
 
-Currently, two official plugins are available:
+## Product goals
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Make it easy to start speaking without setup or sign-in.
+- Keep the experience focused on real-world situations.
+- Provide immediate, lightweight feedback that feels encouraging.
+- Handle loading, empty, and error states clearly.
 
-## React Compiler
+## What I built
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- A language selector (French, Spanish, Japanese) and scenario selector (cafe, meeting someone new, directions, shopping).
+- A prompt panel that shows empty, loading, error, and ready states.
+- A response input with validation and a quick feedback summary.
+- A compact, card-based layout that reads well on mobile.
 
-## Expanding the ESLint configuration
+## UX decisions
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- I keep the screen to two panels to reduce cognitive load.
+- I added a small status badge so users understand if the prompt is ready.
+- I reset the response when a new prompt is generated to avoid mismatched answers.
+- I use calm color contrast and larger tap targets for mobile comfort.
+
+## How it works
+
+1. I store languages and scenarios in local arrays.
+2. When both selections are made, I simulate a short loading state and render the matching prompt.
+3. On submit, I validate input and return quick feedback using rule-based checks:
+   - Fewer than 6 words prompts the user to add another sentence.
+   - Missing a question nudges the user to keep the conversation going.
+   - Otherwise, the feedback confirms a smooth, polite response.
+
+## States handled
+
+- Empty: prompt area instructs the user to select a language and scenario.
+- Loading: a short delay simulates prompt generation.
+- Error: missing prompt or empty response yields a clear message.
+- Success: feedback appears after submission.
+
+## Tech stack
+
+- React + Vite for fast setup and deployment.
+- Vanilla CSS for tight control over layout and polish.
+
+## Project structure
+
+- `src/App.jsx` holds the UI, state logic, and prompt/feedback flow.
+- `src/App.css` defines the card layout and UI styles.
+- `src/index.css` sets global typography and background.
+- `vite.config.js` uses a relative base so GitHub Pages works.
+
+## Running locally
+
+```bash
+npm install
+npm run dev
+```
+
+## Building for production
+
+```bash
+npm run build
+```
+
+## Deployment (GitHub Pages)
+
+```bash
+npm run build
+```
+
+I deploy the contents of `dist/` to the `gh-pages` branch. The Vite `base` is set to `./` so assets resolve correctly when hosted at a subpath.
+
+## Future improvements
+
+- Add more scenarios and region-specific vocabulary.
+- Add a retry button to generate a fresh prompt.
+- Save recent responses for quick reflection.
+- Add gentle corrections using a lightweight language model.
